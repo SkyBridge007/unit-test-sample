@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.michael.sample.dao.UserInfoDao">
+    <resultMap id="userInfoResultMap" type="org.michael.sample.entity.UserInfo">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="sex" column="sex"/>
+        <result property="mobile" column="mobile"/>
+        <result property="address" column="address"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <insert id="saveUserInfo" parameterType="org.michael.sample.entity.UserInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_info(user_id, nickname, sex, mobile, address, update_time, create_time)
+        VALUES(#{userId}, #{nickname}, #{sex}, #{mobile}, #{address}, #{updateTime}, #{createTime})
+    </insert>
+
+    <update id="updateUserInfo" parameterType="org.michael.sample.entity.UserInfo">
+        UPDATE user_info
+        <set>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="mobile!=null">mobile=#{mobile},</if>
+            <if test="address!=null">address=#{address},</if>
+            update_time=#{updateTime}
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+
+    <select id="getUserInfoByUserId" resultMap="userInfoResultMap">
+        SELECT user_id, nickname, sex, mobile, address, update_time, create_time
+        FROM user_info
+        WHERE user_id=#{userId}
+    </select>
+
+    <select id="getUserInfoByMobile" resultMap="userInfoResultMap">
+        SELECT user_id, nickname, sex, mobile, address, update_time, create_time
+        FROM user_info
+        WHERE mobile=#{mobile}
+    </select>
+
+    <select id="listUserInfoByUserIds" resultMap="userInfoResultMap">
+        SELECT user_id, nickname, sex, mobile, address, update_time, create_time
+        FROM user_info
+        WHERE user_id IN
+        <foreach collection="userIds" index="index" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="removeUserInfoByUserId">
+        DELETE FROM user_info
+        WHERE user_id=#{userId}
+    </delete>
+
+</mapper>
