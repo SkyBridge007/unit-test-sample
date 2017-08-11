@@ -40,9 +40,10 @@ public class UserInfoManagerImpl implements UserInfoManager {
 	public Boolean saveUserInfo(UserInfoBO userInfoBO) {
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(userInfoBO.getUserId());
-        userInfo.setMobile(userInfoBO.getMobile());
         userInfo.setNickname(userInfoBO.getNickname());
         userInfo.setSex(userInfoBO.getSex());
+        userInfo.setMobile(userInfoBO.getMobile());
+        userInfo.setAddress(userInfoBO.getAddress());
         userInfo.setUpdateTime(new Date());
         userInfo.setCreateTime(new Date());
 

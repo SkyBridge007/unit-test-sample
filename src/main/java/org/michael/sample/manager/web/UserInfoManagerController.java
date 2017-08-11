@@ -14,6 +14,8 @@ import org.michael.sample.manager.UserInfoManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,7 +53,22 @@ public class UserInfoManagerController {
 		}
 		
 		return result;
-				
+	}
+	
+	@ApiOperation(value="新增用户信息", notes="")
+	@PostMapping("/add")
+	public Result saveUserInfo(@ApiParam(required = true, value = "用户ID") 
+									  @RequestBody UserInfoBO userInfoBO){
+		Result result = null;
+		boolean flag = userInfoManager.saveUserInfo(userInfoBO);
+		if(flag){
+			result = new Result(Result.SUCCESS);
+		}else{
+			result = new Result(Result.FAILURE);
+			result.setMsg(result.getMsg().concat(", save userInfo failure, Please try again later."));
+		}
+		
+		return result;
 	}
 
 }

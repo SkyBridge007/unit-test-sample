@@ -11,6 +11,7 @@ package org.michael.sample.manager.web;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,12 +25,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /** 
@@ -58,6 +61,7 @@ public class UserInfoManagerControllerTest {
     @Before
     public void setup(){
         mockMvc = MockMvcBuilders.standaloneSetup(userInfoManagerController).build();
+        
         userInfoBO = new UserInfoBO();
         userInfoBO.setUserId(1003L);
         userInfoBO.setNickname("Michael");
@@ -80,7 +84,19 @@ public class UserInfoManagerControllerTest {
     	
     }
     
-	
+    @Test
+    public void saveUserInfo() throws Exception{
+    	ObjectMapper mapper = new ObjectMapper();
+    	when(userInfoManager.saveUserInfo(any(UserInfoBO.class))).thenReturn(true);
+   // 	doReturn(true).when(userInfoManager).saveUserInfo(any(UserInfoBO.class));
+    	this.mockMvc.perform(post("/userInfo/add")
+    				.contentType(MediaType.APPLICATION_JSON_UTF8)
+					.content(mapper.writeValueAsString(userInfoBO)))
+					.andDo(print())
+    				.andExpect(status().isOk())
+    				.andExpect(jsonPath("$.code", is(0)));
+    	
+    }
 	
 
 }
