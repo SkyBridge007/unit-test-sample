@@ -15,9 +15,9 @@
          	http://www.springframework.org/schema/util/spring-util.xsd">
 
 
-<!--	 启用spring mvc 注解
+	<!--	 启用spring mvc 注解
     <context:annotation-config />  -->
-		<!-- 定义扫描bean的位置 -->
+	<!-- 定义扫描bean的位置 -->
 	<context:component-scan base-package="org.michael.sample" use-default-filters="false">
 		<context:include-filter type="regex"
 			expression=".*..*Controller" />
