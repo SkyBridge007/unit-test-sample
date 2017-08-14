@@ -123,6 +123,7 @@
                     </formats>
                     <maxmem>256m</maxmem>
                     <instrumentation>
+                    	<!--忽略列表.根据class文件路径进行匹配-->
                         <excludes>
                             <!-- Configuration and Application classes can be excluded
                                  from test coverage, as they should have no meaningful
