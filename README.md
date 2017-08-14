@@ -36,3 +36,5 @@ H2内存数据库可以很好的解决上述问题，本身作为嵌入式数据
 7. mockito
 8. spring MockMvc
 9. lombok
+
+http://localhost:8080/swagger-ui.html
