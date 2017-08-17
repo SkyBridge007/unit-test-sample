@@ -25,7 +25,7 @@ node {
       }
    }
    stage('Results') {
-      junit '**/target/site/cobertura/index.html'
+      junit '**/target/surefire-reports/TEST-*.xml'
       archive 'target/*.jar'
    }
 }
