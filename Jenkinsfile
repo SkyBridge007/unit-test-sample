@@ -8,12 +8,12 @@ node {
       // **       in the global configuration.           
       mvnHome = tool 'Maven-3.3.9'
    }
-   stage('Test'){
+   stage('UnitTest'){
         //mvn 测试
 	  if (isUnix()) {
-         sh "mvn clean cobertura:cobertura"
+         sh "mvn clean test"
       } else {
-         bat "mvn clean cobertura:cobertura"
+         bat "mvn clean test"
       }        
     }
    stage('Build') {
@@ -25,7 +25,8 @@ node {
       }
    }
    stage('Results') {
-      junit '**/target/surefire-reports/TEST-*.xml'
+      //junit '**/target/surefire-reports/TEST-*.xml'
+      jacoco exclusionPattern: 'org/michael/sample/**/*Builder.class,org/michael/sample/dao/*.class,org/michael/sample/manager/*.class,org/michael/sample/**/*Application.class'
       archive 'target/*.jar'
    }
 }
