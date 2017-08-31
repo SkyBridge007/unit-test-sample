@@ -1,0 +1,10 @@
+server:
+  port: 9080
+  address: 0.0.0.0
+  #context-path配置在Tomcat中启动无效.
+  context-path: 
+  compression:
+    enabled: true
+    min-response-size: 1
+    mime-types: text/plain,application/json
+
